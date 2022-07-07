@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}poclist{% endblock %}
+{% block title %}managepoc{% endblock %}
 {% block javascript %}
 <script type="text/javascript">
 	$(function() {
@@ -7,11 +7,17 @@
 		function(e) {
 			var btn = $(e.relatedTarget),
         	id = btn.data("id");
-        	$.get("/pocDetail/"+id, function(result){
+        	$.get("/tempPocDetail/"+id, function(result){
 				$("#pocdetail").html(result);
 			  });
 		})
 	});
+
+</script>
+<script>
+    $("ul#search_menu").on("click","li",function(){
+        $(button_show).html($(this).text());
+        })
 </script>
 {% endblock %}
 {% block css %}
@@ -43,19 +49,25 @@
 										<th>名称</th>
 										<th>系统</th>
 										<th>分类</th>
-										<th>时间</th>
-										<th>#</th>
 									</tr>
 								</thead>
 								<tbody>
 									{% for poc in pocs %}
 									<tr >
 										<td><input name="pocid" type="hidden" class="" value="{{poc.id}}">{{poc.id}}</td>
-										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.name}}</button></td>
-										<td>{{poc.system}}</td>
-										<td>{{poc.categroy}}</td>
-										<td><code>{{poc.date}}</code></td>
-										<td><a href="{{url_for('download',id=poc.id)}}"><button class="btn btn-info" >下载</button></a></td>
+										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.filename}}</button></td>
+										<td>
+											<div class="input-group-btn">
+												<button id="button_show_{{poc.id}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >text</button>
+												<ul class="dropdown-menu" id="search_menu" >
+												  <li><a href="#">text</a></li>
+												  <li><a href="#">name</a></li>
+												  <li><a href="#">system</a></li>
+												  <li><a href="#">category</a></li>
+												</ul>
+											</div>
+										</td>
+										<td></td>
 									</tr>
 								{% endfor %}
 								</tbody>
@@ -78,10 +90,6 @@
 								</div>
 							</div>
 						</div>
-						  <div style="text-align:center">
-								{% import 'pages.html' as pg %}
-								{{ pg.my_paginate(pagination,'poclist') }}
-							</div>
 					  </div>
 				  	</div>
 

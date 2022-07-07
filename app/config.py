@@ -6,8 +6,10 @@
 # @Github: https://github.com/Cl0udG0d
 import os
 
-debug=True
+DEBUG=True
 SECRET_KEY = os.urandom(24)
+
+ALLOWED_EXTENSIONS = set(['py','yaml'])
 
 SQLALCHEMY_DATABASE_URI='sqlite:///database/pochub.db'
 SQLALCHEMY_TRACK_MODIFICATIONS=True

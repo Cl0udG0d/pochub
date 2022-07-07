@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/TableTools.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/poclist.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/fileinput.min.css')}}">
+{% endblock %}
+{% block content %}
+<div  style="margin:50px">
+    <div >
+      <form  method="post" action="{{url_for('upload')}}" enctype="multipart/form-data">
+            <input name="files" type="file" class="file" multiple/>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    $("ul#search_menu").on("click","li",function(){
+        $(button_show).html($(this).text()+'<span class="caret"></span>');
+        })
+</script>
+<script type="text/javascript" src="{{url_for('static',filename='js/fileinput.min.js')}}"></script>
+
+{% endblock %}

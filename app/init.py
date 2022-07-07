@@ -8,6 +8,7 @@
 from flask import Flask
 from db import db
 import config
+from models import *
 
 
 app = Flask(__name__,
@@ -16,3 +17,5 @@ app = Flask(__name__,
     )
 app.config.from_object(config)
 db.init_app(app)
+with app.app_context():
+    db.create_all()

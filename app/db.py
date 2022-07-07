@@ -6,5 +6,4 @@
 # @Github: https://github.com/Cl0udG0d
 
 from flask_sqlalchemy import SQLAlchemy
-
 db=SQLAlchemy()

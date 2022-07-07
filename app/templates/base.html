@@ -16,8 +16,9 @@
     <header >
         <div style="padding-left:30px;padding-top:15px">
             <ul class="nav nav-tabs">
-              <li role="presentation" class="active"><a href="#">pochub</a></li>
-              <li role="presentation"><a href="#">poclist</a></li>
+              <li role="presentation" {% if pochub_active %} class="active" {% endif %}><a href="{{url_for('index')}}">pochub</a></li>
+              <li role="presentation" {% if poclist_active %} class="active" {% endif %}><a href="{{url_for('poclist')}}">poclist</a></li>
+              <li role="presentation" {% if upload_active %} class="active" {% endif %}><a href="{{url_for('upload')}}">upload</a></li>
               <li role="presentation"><a href="https://github.com/Cl0udG0d/pochub">github</a></li>
             </ul>
         </div>
