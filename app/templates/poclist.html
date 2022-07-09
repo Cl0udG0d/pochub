@@ -36,7 +36,7 @@
 					  <div class="panel-body" style="min-height:400px">
 						  <br>
 					  		<table cellpadding="0" cellspacing="0" border="0"
-					  		class="table table-bordered">
+					  		class="table table-bordered" style="table-layout:fixed;word-break:break-all;">
 									<thead>
 									<tr>
 										<th>id</th>
@@ -53,7 +53,7 @@
 										<td><input name="pocid" type="hidden" class="" value="{{poc.id}}">{{poc.id}}</td>
 										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.name}}</button></td>
 										<td>{{poc.system}}</td>
-										<td>{{poc.categroy}}</td>
+										<td>{{poc.category}}</td>
 										<td><code>{{poc.date}}</code></td>
 										<td><a href="{{url_for('download',id=poc.id)}}"><button class="btn btn-info" >下载</button></a></td>
 									</tr>

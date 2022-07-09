@@ -2,21 +2,24 @@
 {% block content %}
             <div  class = "col-md-offset-4 col-lg-offset-4col-xl-offset-4" style="margin-top:150px">
               <div class="col-lg-6">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button id="button_show" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >text <span class="caret"></span></button>
-                        <ul class="dropdown-menu" id="search_menu" >
-                          <li><a href="#">text</a></li>
-                          <li><a href="#">name</a></li>
-                          <li><a href="#">system</a></li>
-                          <li><a href="#">category</a></li>
-                        </ul>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search for...">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                      </span>
-                </div><!-- /input-group -->
+                  <form action="{{url_for('search')}}" method="get">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <input type="hidden" value="text" id="search_type" name="search_type">
+                            <button  id="button_show" type="button"  class="btn btn-default dropdown-toggle" data-toggle="dropdown" >text <span class="caret"></span></button>
+                            <ul class="dropdown-menu" id="search_menu" >
+                              <li><a href="#">text</a></li>
+                              <li><a href="#">name</a></li>
+                              <li><a href="#">system</a></li>
+                              <li><a href="#">category</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" name="search_keyword" class="form-control" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Go!</button>
+                          </span>
+                    </div><!-- /input-group -->
+                      </form>
               </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
 {% endblock %}
@@ -24,6 +27,8 @@
 <script>
     $("ul#search_menu").on("click","li",function(){
         $(button_show).html($(this).text()+'<span class="caret"></span>');
+        var input = document.getElementById("search_type");
+        input.value = $(this).text();
         })
 </script>
 {% endblock %}

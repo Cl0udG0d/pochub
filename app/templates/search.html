@@ -1,10 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}poclist{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+	$(function() {
+		$('#showpoc').on('shown.bs.modal',
+		function(e) {
+			var btn = $(e.relatedTarget),
+        	id = btn.data("id");
+        	$.get("/pocDetail/"+id, function(result){
+				$("#pocdetail").html(result);
+			  });
+		})
+	});
+</script>
+{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/dataTables.bootstrap.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/TableTools.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/jquery.fileupload.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/jquery.fileupload-ui.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/poclist.css')}}">
+{% endblock %}
+{% block content %}
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-success">
+	<strong class="default">{{ msg }} </strong>
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+</div>
 
-</body>
-</html>
+{% endfor %}
+
+<div class="row" style="margin:20px;">
+			  <div class="col-md-12">
+				  	<div class="panel panel-default">
+					  <div class="panel-body" style="min-height:400px">
+						  <br>
+					  		<table cellpadding="0" cellspacing="0" border="0"
+					  		class="table table-bordered" style="table-layout:fixed;word-break:break-all;">
+									<thead>
+									<tr>
+										<th>id</th>
+										<th>名称</th>
+										<th>系统</th>
+										<th>分类</th>
+										<th>时间</th>
+										<th>#</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for poc in pocs %}
+									<tr >
+										<td><input name="pocid" type="hidden" class="" value="{{poc.id}}">{{poc.id}}</td>
+										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.name}}</button></td>
+										<td>{{poc.system}}</td>
+										<td>{{poc.category}}</td>
+										<td><code>{{poc.date}}</code></td>
+										<td><a href="{{url_for('download',id=poc.id)}}"><button class="btn btn-info" >下载</button></a></td>
+									</tr>
+								{% endfor %}
+								</tbody>
+								</table>
+						  <div class="modal fade" id="showpoc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+							<div class="modal-dialog">
+								<div class="panel panel-default">
+										  <div class="panel-heading">
+											<h3 class="panel-title">POC详情</h3>
+														<div class="panel-options pull-right">
+														  </div>
+										  </div>
+										  <div class="panel-body">
+<!--											  <div class="panel-body" id="pocdetail" style="height: 150px;overflow: auto;">-->
+<!--												  <pre></pre>-->
+			<!--								   <p class="list-group-item-text"></p>-->
+<!--											  </div>-->
+											<div  style="white-space: pre;"><pre id="pocdetail" style="max-height:500px"></pre></div>
+										  </div>
+								</div>
+							</div>
+						</div>
+						  <div style="text-align:center">
+								{% import 'searchpage.html' as pg %}
+								{{ pg.my_paginate(pagination,'search',search_type,search_keyword) }}
+							</div>
+					  </div>
+				  	</div>
+
+			  </div>
+            </div>
+
+{% endblock %}

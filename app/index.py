@@ -4,6 +4,7 @@
 # @Author  : Cl0udG0d
 # @File    : index.py.py
 # @Github: https://github.com/Cl0udG0d
+import json
 import os
 
 from flask import(
@@ -61,9 +62,30 @@ def download(id=None):
         flash('{} Download oss files failed!'.format(id))
         return redirect(url_for('poclist'))
 
-@app.route('/search',methods=['POST'])
-def search():
-    return
+@app.route('/result',methods=['GET'])
+@app.route('/result/<int:page>',methods=['GET'])
+def result(page=1,pocs=None,msg=None):
+    paginate = pocs.paginate(page=page, per_page=10, error_out=False)
+    pocs = paginate.items
+    return render_template('poclist.html', pagination=paginate, pocs=pocs,poclist_active=True)
+
+@app.route('/search',methods=['GET'])
+@app.route('/search/<int:page>',methods=['GET'])
+def search(page=1,msg=None):
+    search_type = request.args.get('search_type')
+    # print(search_type)
+    search_keyword = request.args.get('search_keyword')
+    if search_type=="text":
+        paginate=querySearchText(text=search_keyword,page=page)
+    elif search_type=="name":
+        paginate=querySearchName(search_keyword,page=page)
+    elif search_type=="system":
+        paginate=querySearchSystem(search_keyword,page=page)
+    else:
+        paginate=querySearchCategory(search_keyword,page=page)
+    pocs = paginate.items
+    return render_template('search.html', pagination=paginate, pocs=pocs, poclist_active=True,search_type=search_type,search_keyword=search_keyword)
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in config.ALLOWED_EXTENSIONS
@@ -96,6 +118,16 @@ def managepoc():
     if request.method == 'GET':
         pocs = TempPoc.query.order_by(TempPoc.id.desc()).all()
         return render_template('managepoc.html', upload_active=True,pocs=pocs)
+    else:
+        '''
+        将临时poc修正为正式poc
+        '''
+        data=request.form.get('jsontext')
+        for poc in data.split(';'):
+            poc=json.loads(poc)
+            insertPocData(poc)
+        delTempPocData()
+        return redirect(url_for('poclist'))
 
 
 @app.route('/test_route')

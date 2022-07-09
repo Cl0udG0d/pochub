@@ -15,9 +15,36 @@
 
 </script>
 <script>
-    $("ul#search_menu").on("click","li",function(){
-        $(button_show).html($(this).text());
-        })
+	$('ul#onclickSelect').on("click","li",function(){
+
+		var system_id="system_"+$(this).val();
+		document.getElementById(system_id).innerHTML=$(this).text();
+	})
+	$('ul#category_onclickSelect').on("click","li",function(){
+
+		var category_id="category_"+$(this).val();
+		document.getElementById(category_id).innerHTML=$(this).text();
+	})
+	save_temppoc.onclick = function(){
+		var tr;
+		var jsondata={};
+		var dataArray = new Array();
+		for(var i=1;i<data_table.rows.length;i++){
+			date = new Object();
+			tr = data_table.rows[i];
+			var pid=tr.getElementsByTagName("input")[0].value;
+			date.tid = tr.getElementsByTagName("input")[0].value;
+			date.filename = document.getElementById("button_"+pid).innerHTML;
+			date.system = document.getElementById("system_"+pid).value;
+			date.category = document.getElementById("category_"+pid).innerHTML;
+			//将table表对象转换成数组装成json放在数组里
+			dataArray.push(JSON.stringify(date));
+		}
+			document.getElementById('JSONText').value = dataArray.join(';');
+			myform.submit();
+		}
+
+
 </script>
 {% endblock %}
 {% block css %}
@@ -41,8 +68,8 @@
 				  	<div class="panel panel-default">
 					  <div class="panel-body" style="min-height:400px">
 						  <br>
-					  		<table cellpadding="0" cellspacing="0" border="0"
-					  		class="table table-bordered">
+					  		<table id="data_table" cellpadding="0" cellspacing="0" border="0"
+					  		class="table table-bordered" style="table-layout:fixed;word-break:break-all;">
 									<thead>
 									<tr>
 										<th>id</th>
@@ -55,23 +82,43 @@
 									{% for poc in pocs %}
 									<tr >
 										<td><input name="pocid" type="hidden" class="" value="{{poc.id}}">{{poc.id}}</td>
-										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.filename}}</button></td>
+										<td><button id="button_{{poc.id}}" class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.filename}}</button></td>
 										<td>
 											<div class="input-group-btn">
-												<button id="button_show_{{poc.id}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >text</button>
-												<ul class="dropdown-menu" id="search_menu" >
-												  <li><a href="#">text</a></li>
-												  <li><a href="#">name</a></li>
-												  <li><a href="#">system</a></li>
-												  <li><a href="#">category</a></li>
+												<input id="system_{{poc.id}}" class="form-control" value="其他">
+											</div>
+										</td>
+										<td>
+											<div class="input-group-btn">
+												<button id="category_{{poc.id}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >其他漏洞</button>
+												<ul class="dropdown-menu" id="category_onclickSelect" >
+												  <li value="{{poc.id}}"><a href="#">CSRF漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">SQL注入漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">SSRF漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">XSS漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">代码执行漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">任意文件下载</a></li>
+												  <li value="{{poc.id}}"><a href="#">任意文件读取</a></li>
+												  <li value="{{poc.id}}"><a href="#">其他漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">命令执行漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">弱口令</a></li>
+												  <li value="{{poc.id}}"><a href="#">敏感信息泄露</a></li>
+												  <li value="{{poc.id}}"><a href="#">文件上传漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">点击劫持漏洞</a></li>
+												  <li value="{{poc.id}}"><a href="#">逻辑缺陷</a></li>
 												</ul>
 											</div>
 										</td>
-										<td></td>
 									</tr>
 								{% endfor %}
 								</tbody>
 								</table>
+						  <div id="dongzuo" >
+							<form id="myform" action="{{url_for('managepoc')}}" method="post">
+								<input id="JSONText" name="jsontext"  value="" type="hidden"/>
+							</form>
+								<button id="save_temppoc" class="btn btn-info">提交</button>
+							</div>
 						  <div class="modal fade" id="showpoc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 							<div class="modal-dialog">
 								<div class="panel panel-default">
