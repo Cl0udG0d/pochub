@@ -6,7 +6,7 @@
 # @Github: https://github.com/Cl0udG0d
 import os
 
-DEBUG=True
+DEBUG=False
 SECRET_KEY = os.urandom(24)
 
 ALLOWED_EXTENSIONS = set(['py','yaml'])

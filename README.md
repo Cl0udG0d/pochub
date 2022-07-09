@@ -1,9 +1,18 @@
 # pochub
 
 ## 简介
-没啥技术含量的东西,用于存储漏洞检测poc的仓库,内容均来自互联网，只是进行了搬运和整理的工作
+`pochub` 用来记录互联网上已公开的漏洞检测poc，提供一个快速查找漏洞对应检测poc的平台
 
-不管是随手写的检测脚本还是基于pocsuite、nuclei等框架编写的脚本都有记录的必要
+漏洞检测poc在`/app/database/pochub.db`文件中，为了方便部署使用`sqlite`数据库
+## 演示demo
+
+## 自行搭建
+
+```
+git clone https://github.com/Cl0udG0d/pochub
+cd pochub
+docker-compose up -d 
+```
 
 ## 已整理poc
 
@@ -20,8 +29,10 @@
   + https://github.com/DawnFlame/POChouse
   + https://github.com/HacTF/poc--exp
   + https://github.com/mntn0x/POC
+  + https://github.com/nomi-sec/PoC-in-GitHub
 + 整理
 + 搭建查找网站
++ 扩充支持上传的poc格式
 + ...
 
 ## 来自

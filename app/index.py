@@ -130,21 +130,24 @@ def managepoc():
         return redirect(url_for('poclist'))
 
 
-@app.route('/test_route')
-def test_route():
-    from db import db
-    poc = Pocs(name="测试",filename='test.py',detail="测试")
-    try:
-        db.session.add(poc)
-    except:
-        db.session.rollback()
-    db.session.commit()
-    db.session.close()
-    return render_template('base.html')
+# @app.route('/test_route')
+# def test_route():
+#     from db import db
+#     poc = Pocs(name="测试",filename='test.py',detail="测试")
+#     try:
+#         db.session.add(poc)
+#     except:
+#         db.session.rollback()
+#     db.session.commit()
+#     db.session.close()
+#     return render_template('base.html')
 
 def test():
     print('hi')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+        host='0.0.0.0',
+        port=8080
+    )
