@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.7
 WORKDIR /
 COPY . .
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
