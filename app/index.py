@@ -14,7 +14,7 @@ from init import app
 from models import *
 import mimetypes
 import config
-from werkzeug.utils import secure_filename
+from util import secure_filename
 
 
 
