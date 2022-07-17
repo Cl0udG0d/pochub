@@ -49,7 +49,16 @@ def insertPocData(poc):
     插入新poc
     :return:
     '''
-    name = poc["filename"].split('.')[0] if "." in poc["filename"] else poc["filename"]
+    if "." in poc["filename"]:
+        filecmplist=poc["filename"].split('.')
+        if len(filecmplist)==2:
+            name = filecmplist[0]
+        else:
+            name=".".join(filecmplist[0:len(filecmplist)-1])
+    else:
+        name = poc["filename"]
+
+    # name = poc["filename"].split('.')[0] if "." in poc["filename"] else poc["filename"]
     system = poc["system"]
     category = poc["category"]
     detail = querTempPocDetail(poc["tid"])

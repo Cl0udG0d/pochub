@@ -39,7 +39,6 @@ docker-compose up -d
 
 ## TODO
 + 存储POC
-  + https://github.com/Cl0udG0d/edusrc_POC
   + https://github.com/luck-ying/Library-POC
   + https://github.com/helloexp/0day
   + https://github.com/cckuailong/reapoc
@@ -52,12 +51,13 @@ docker-compose up -d
   + https://github.com/mntn0x/POC
   + https://github.com/nomi-sec/PoC-in-GitHub
 + 整理
-+ 搭建查找网站
 + 扩充支持上传的poc格式
 + ...
 
 ## 贡献
 欢迎PR或者直接联系我微信来维护这个项目
+
+如果有想要提交的poc，请不要在演示网址进行上传，直接提交pr即可，否则无法同步
 
 ## END 
  

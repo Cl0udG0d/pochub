@@ -43,7 +43,6 @@
 										<th>名称</th>
 										<th>系统</th>
 										<th>分类</th>
-										<th>时间</th>
 										<th>#</th>
 									</tr>
 								</thead>
@@ -54,7 +53,6 @@
 										<td><button class="btn" data-target="#showpoc" data-toggle="modal" data-id="{{poc.id}}">{{poc.name}}</button></td>
 										<td>{{poc.system}}</td>
 										<td>{{poc.category}}</td>
-										<td><code>{{poc.date}}</code></td>
 										<td><a href="{{url_for('download',id=poc.id)}}"><button class="btn btn-info" >下载</button></a></td>
 									</tr>
 								{% endfor %}
